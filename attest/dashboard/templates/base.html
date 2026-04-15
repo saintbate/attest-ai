@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Attest{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-brand">attest</div>
+        <a href="/" class="link {% block nav_home %}{% endblock %}">Overview</a>
+        <a href="/#inventory" class="link">Inventory</a>
+        <a href="/#requirements" class="link">Requirements</a>
+        <div class="nav-footer">
+            <div class="nav-deadline">
+                Enforcement<br>
+                <strong>2 Aug 2026</strong>
+            </div>
+        </div>
+    </nav>
+    <div class="page">
+        {% block content %}{% endblock %}
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

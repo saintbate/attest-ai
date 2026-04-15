@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "attest-ai"
+version = "0.1.0"
+description = "EU AI Act compliance SDK — one line to make your AI system audit-ready"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "click>=8.1",
+    "rich>=13.0",
+    "jinja2>=3.1",
+    "numpy>=1.24",
+    "pydantic>=2.0",
+    "sqlalchemy>=2.0",
+    "scipy>=1.11",
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+    "python-multipart>=0.0.6",
+]
+
+[project.optional-dependencies]
+torch = ["torch>=2.0"]
+cv = ["opencv-python>=4.8"]
+all = ["torch>=2.0", "opencv-python>=4.8"]
+dev = ["pytest>=7.0", "ruff>=0.1"]
+
+[project.scripts]
+attest = "attest.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.ruff]
+line-length = 99
+target-version = "py310"

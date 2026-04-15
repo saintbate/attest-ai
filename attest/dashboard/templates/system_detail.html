@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block title %}{{ system.name }} — Attest{% endblock %}
+
+{% block content %}
+<a href="/" class="back">← back</a>
+
+<div class="detail-header">
+    <div class="page-title">{{ system.name }}</div>
+    <span class="badge {{ classification.risk_level.value }}">{{ classification.risk_level.value }}</span>
+</div>
+<div class="detail-purpose">{{ system.purpose or system.description }}</div>
+
+<div class="section">
+    <div class="section-label">System</div>
+    <div class="props">
+        <div class="prop">
+            <div class="prop-key">ID</div>
+            <div class="prop-val mono">{{ system.system_id }}</div>
+        </div>
+        <div class="prop">
+            <div class="prop-key">Model</div>
+            <div class="prop-val">{{ system.model_type }}</div>
+        </div>
+        <div class="prop">
+            <div class="prop-key">Framework</div>
+            <div class="prop-val">{{ system.framework or "—" }}</div>
+        </div>
+        <div class="prop">
+            <div class="prop-key">Version</div>
+            <div class="prop-val mono">{{ system.version or "—" }}</div>
+        </div>
+        {% for k, v in system.tags.items() %}
+        <div class="prop">
+            <div class="prop-key">{{ k }}</div>
+            <div class="prop-val">{{ v }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-label">Classification</div>
+    <div class="props">
+        <div class="prop">
+            <div class="prop-key">Risk level</div>
+            <div class="prop-val">{{ classification.risk_level.value | upper }}</div>
+        </div>
+        <div class="prop">
+            <div class="prop-key">Category</div>
+            <div class="prop-val">
+                {% if classification.matched_category %}
+                Area {{ classification.matched_category.area_number }} · {{ classification.matched_category.name }}
+                {% else %}—{% endif %}
+            </div>
+        </div>
+        <div class="prop">
+            <div class="prop-key">Confidence</div>
+            <div class="prop-val mono">{{ "%.0f" | format(classification.confidence * 100) }}%</div>
+        </div>
+        <div class="prop">
+            <div class="prop-key">Safety component</div>
+            <div class="prop-val">{{ "Yes" if classification.is_safety_component else "No" }}</div>
+        </div>
+    </div>
+    {% if classification.matched_signals %}
+    <div class="signals">
+        {% for s in classification.matched_signals %}
+        <span class="signal">{{ s }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<div class="section">
+    <div class="section-label">Performance</div>
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-val">{{ "{:,}".format(system.total_inferences) }}</div>
+            <div class="stat-key">Inferences</div>
+        </div>
+        <div class="stat">
+            <div class="stat-val">{{ "%.1f" | format(system.error_rate * 100) }}%</div>
+            <div class="stat-key">Error rate</div>
+        </div>
+        <div class="stat">
+            <div class="stat-val {% if drift.has_drift %}{% if drift.overall_severity.value == 'critical' %}danger{% else %}warn{% endif %}{% endif %}">
+                {% if drift.has_drift %}{{ drift.overall_severity.value }}{% else %}stable{% endif %}
+            </div>
+            <div class="stat-key">Drift</div>
+        </div>
+    </div>
+</div>
+
+{% if drift.has_drift %}
+<div class="section">
+    <div class="section-label">Drift signals</div>
+    {% for signal in drift.signals %}
+        {% if signal.severity.value != "none" %}
+        <div style="padding: 6px 0; font-size: 12.5px; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle);">
+            <span class="badge {{ signal.severity.value }}">{{ signal.metric }}</span>
+            <span style="margin-left: 6px;">{{ signal.description }}</span>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if gap %}
+<div class="section">
+    <div class="section-label">Compliance · {{ compliant_count }}/{{ total_count }}</div>
+    {% set descs = {
+        "risk_management_system": "Risk management system covering the full AI lifecycle",
+        "data_governance": "Training data documentation, quality measures, validation",
+        "technical_documentation": "Annex IV technical documentation before market placement",
+        "logging_and_records": "Automatic event logging over the system lifetime",
+        "transparency_to_deployers": "Clear information about capabilities and limitations",
+        "human_oversight": "Effective human oversight mechanisms during use",
+        "accuracy_robustness_cybersecurity": "Appropriate accuracy, robustness, and security levels",
+        "conformity_assessment": "Conformity assessment procedure completed",
+        "eu_declaration_of_conformity": "EU declaration of conformity per Annex V",
+        "post_market_monitoring": "Post-market monitoring system established"
+    } %}
+    <div class="checklist">
+        {% for item, status in gap.items() %}
+        <div class="check-item">
+            <div class="check-icon {% if status %}pass{% else %}fail{% endif %}">
+                {% if status %}✓{% else %}✗{% endif %}
+            </div>
+            <div>
+                <div class="check-text">{{ item | replace("_", " ") | title }}</div>
+                <div class="check-desc">{{ descs.get(item, "") }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="section">
+    <div class="section-label">Confidence over time</div>
+    <div class="chart-wrap">
+        <canvas id="chart" height="160"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const data = {{ confidence_timeline | safe }};
+if (data.length > 0) {
+    const ctx = document.getElementById('chart').getContext('2d');
+    Chart.defaults.color = '#6b7084';
+    Chart.defaults.borderColor = '#1f2432';
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.map((_, i) => i + 1),
+            datasets: [{
+                label: 'Confidence',
+                data: data.map(d => d.confidence),
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59,130,246,0.06)',
+                fill: true,
+                tension: 0.35,
+                pointRadius: 0,
+                borderWidth: 1.5,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { display: false },
+                y: { min: 0, max: 1, ticks: { font: { family: "'SF Mono', monospace", size: 10 } },
+                     grid: { color: '#1a1e28' } }
+            }
+        }
+    });
+}
+</script>
+{% endblock %}

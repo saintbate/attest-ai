@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Attest — Overview{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+<div class="page-title">Overview</div>
+<div class="page-sub">{{ days_remaining }} days to enforcement</div>
+
+<div class="stats">
+    <div class="stat">
+        <div class="stat-val">{{ total_systems }}</div>
+        <div class="stat-key">Systems</div>
+    </div>
+    <div class="stat">
+        <div class="stat-val danger">{{ high_risk }}</div>
+        <div class="stat-key">High risk</div>
+    </div>
+    <div class="stat">
+        <div class="stat-val">{{ "{:,}".format(total_inferences) }}</div>
+        <div class="stat-key">Inferences logged</div>
+    </div>
+    <div class="stat">
+        <div class="stat-val {% if drift_alerts > 0 %}warn{% endif %}">{{ drift_alerts }}</div>
+        <div class="stat-key">Drift alerts</div>
+    </div>
+</div>
+
+<div class="compliance-track">
+    <div class="track-bar">
+        {% set fill_class = "low" if overall_compliance < 30 else ("mid" if overall_compliance < 70 else "ok") %}
+        <div class="track-fill {{ fill_class }}" style="width: {{ overall_compliance }}%"></div>
+    </div>
+    <div class="track-label">
+        <span>Compliance</span>
+        <span class="pct">{{ overall_compliance }}%</span>
+    </div>
+</div>
+
+<div class="section" id="inventory">
+    <div class="section-label">AI System Inventory</div>
+    {% if systems %}
+    <div class="sys-list">
+        {% for item in systems %}
+        <a href="/system/{{ item.system.system_id }}" class="sys-row">
+            <div>
+                <div class="sys-name">{{ item.system.name }}</div>
+                <div class="sys-type">{{ item.system.model_type }}{% if item.system.framework %} · {{ item.system.framework }}{% endif %}</div>
+            </div>
+            <div>
+                <span class="badge {{ item.classification.risk_level.value }}">{{ item.classification.risk_level.value }}</span>
+            </div>
+            <div class="sys-cat">
+                {% if item.classification.matched_category %}
+                Area {{ item.classification.matched_category.area_number }}
+                {% else %}
+                —
+                {% endif %}
+            </div>
+            <div class="sys-inf">{{ "{:,}".format(item.system.total_inferences) }}</div>
+            <div class="sys-drift">
+                {% if item.drift.has_drift %}
+                <span class="badge {{ item.drift.overall_severity.value }}">{{ item.drift.overall_severity.value }}</span>
+                {% else %}
+                <span class="badge stable">stable</span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty">
+        <h2>No systems registered</h2>
+        <p>Wrap your models with the Attest SDK to start monitoring.</p>
+        <pre><code>import attest
+model = attest.wrap(model, name="…", purpose="…")</code></pre>
+    </div>
+    {% endif %}
+</div>
+
+{% if systems %}
+<div class="section" id="requirements">
+    <div class="section-label">Requirements</div>
+    {% set ns = namespace(requirements={}) %}
+    {% for item in systems %}
+        {% if item.gap %}
+            {% for req, status in item.gap.items() %}
+                {% if req not in ns.requirements %}
+                    {% set _ = ns.requirements.update({req: {"pass": 0, "total": 0}}) %}
+                {% endif %}
+                {% set _ = ns.requirements[req].update({"total": ns.requirements[req]["total"] + 1}) %}
+                {% if status %}
+                    {% set _ = ns.requirements[req].update({"pass": ns.requirements[req]["pass"] + 1}) %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    {% set articles = {
+        "risk_management_system": "Art. 9",
+        "data_governance": "Art. 10",
+        "technical_documentation": "Art. 11",
+        "logging_and_records": "Art. 12",
+        "transparency_to_deployers": "Art. 13",
+        "human_oversight": "Art. 14",
+        "accuracy_robustness_cybersecurity": "Art. 15",
+        "conformity_assessment": "Art. 43",
+        "eu_declaration_of_conformity": "Annex V",
+        "post_market_monitoring": "Art. 72"
+    } %}
+    <table class="tbl">
+        <thead>
+            <tr>
+                <th>Requirement</th>
+                <th>Reference</th>
+                <th>Systems</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for req, c in ns.requirements.items() %}
+            <tr>
+                <td>{{ req | replace("_", " ") | title }}</td>
+                <td class="ref">{{ articles.get(req, "") }}</td>
+                <td><span class="mono">{{ c.pass }}/{{ c.total }}</span></td>
+                <td>
+                    {% if c.pass == c.total %}
+                    <span class="badge minimal">done</span>
+                    {% elif c.pass > 0 %}
+                    <span class="badge limited">partial</span>
+                    {% else %}
+                    <span class="badge high">missing</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

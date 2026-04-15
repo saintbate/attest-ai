@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attest — EU AI Act compliance for construction AI</title>
+    <meta name="description" content="One SDK. Automatic risk classification, continuous monitoring, and audit-ready documentation for your AI systems. Enforcement starts August 2, 2026.">
+    <style>
+        :root {
+            --bg: #0b0d11;
+            --surface: #12151c;
+            --surface-2: #181c26;
+            --border: #1f2432;
+            --border-subtle: #161a24;
+            --text: #c8cad0;
+            --text-strong: #ecedf0;
+            --text-muted: #6b7084;
+            --text-faint: #3d4258;
+            --red: #e5484d;
+            --red-dim: rgba(229, 72, 77, 0.12);
+            --amber: #f0a000;
+            --green: #30a46c;
+            --green-dim: rgba(48, 164, 108, 0.10);
+            --blue: #3b82f6;
+            --blue-dim: rgba(59, 130, 246, 0.08);
+            --mono: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', monospace;
+            --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── HEADER ── */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            background: rgba(11, 13, 17, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .header-brand {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-strong);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .header-nav a:hover { color: var(--text); }
+
+        .header-cta {
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-strong) !important;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 5px;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .header-cta:hover {
+            background: #1e2333;
+            border-color: #2a3048;
+        }
+
+        /* ── HERO ── */
+
+        .hero {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 100px 32px 80px;
+            text-align: center;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--red);
+            background: var(--red-dim);
+            padding: 3px 10px;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            margin-top: 32px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            font-size: 13px;
+            font-weight: 500;
+            padding: 9px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+        }
+        .btn-primary {
+            background: var(--text-strong);
+            color: var(--bg);
+        }
+        .btn-primary:hover { background: #fff; }
+
+        .btn-ghost {
+            color: var(--text-muted);
+            border-color: var(--border);
+        }
+        .btn-ghost:hover {
+            color: var(--text);
+            border-color: #2a3048;
+        }
+
+        /* ── CODE ── */
+
+        .code-section {
+            max-width: 580px;
+            margin: 0 auto;
+            padding: 0 32px 80px;
+        }
+
+        .code-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .code-bar {
+            display: flex;
+            align-items: center;
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--border-subtle);
+            gap: 6px;
+        }
+
+        .code-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+        }
+
+        .code-file {
+            font-size: 11px;
+            color: var(--text-faint);
+            font-family: var(--mono);
+            margin-left: 8px;
+        }
+
+        .code-block pre {
+            padding: 16px;
+            font-family: var(--mono);
+            font-size: 13px;
+            line-height: 1.65;
+            overflow-x: auto;
+            color: var(--text);
+        }
+
+        .code-block .cm { color: var(--text-faint); }
+        .code-block .kw { color: #c792ea; }
+        .code-block .fn { color: #82aaff; }
+        .code-block .st { color: #c3e88d; }
+        .code-block .op { color: var(--text-muted); }
+        .code-block .hl {
+            display: block;
+            background: var(--blue-dim);
+            margin: 0 -16px;
+            padding: 0 16px;
+            border-left: 2px solid var(--blue);
+        }
+
+        /* ── STATS BAND ── */
+
+        .band {
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .band-item {
+            flex: 1;
+            text-align: center;
+            padding: 28px 16px;
+        }
+
+        .band-item + .band-item {
+            border-left: 1px solid var(--border-subtle);
+        }
+
+        .band-val {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.03em;
+            font-family: var(--mono);
+        }
+        .band-val.red { color: var(--red); }
+
+        .band-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ── FEATURES ── */
+
+        .features {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 64px 32px;
+        }
+
+        .features-title {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 24px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border-subtle);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .feature {
+            background: var(--surface);
+            padding: 20px;
+        }
+
+        .feature-name {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text-strong);
+            margin-bottom: 4px;
+        }
+
+        .feature-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .feature-ref {
+            font-size: 11px;
+            font-family: var(--mono);
+            color: var(--text-faint);
+            margin-top: 8px;
+        }
+
+        /* ── VERTICAL ── */
+
+        .vertical {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 32px 64px;
+        }
+
+        .vertical-title {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 12px;
+        }
+
+        .vertical-head {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .vertical-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            max-width: 520px;
+        }
+
+        .use-cases {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border-subtle);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .use-case {
+            background: var(--surface);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .uc-name {
+            font-size: 13.5px;
+            color: var(--text-strong);
+        }
+
+        .uc-risk {
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        /* ── CTA ── */
+
+        .cta-section {
+            text-align: center;
+            padding: 64px 32px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .cta-section h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.02em;
+        }
+
+        .cta-section p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            margin-bottom: 24px;
+        }
+
+        /* ── FOOTER ── */
+
+        .footer {
+            padding: 20px 32px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-faint);
+        }
+
+        /* ── RESPONSIVE ── */
+
+        @media (max-width: 600px) {
+            .hero { padding: 60px 20px 48px; }
+            .hero h1 { font-size: 26px; }
+            .hero-actions { flex-direction: column; }
+            .band { flex-direction: column; }
+            .band-item + .band-item { border-left: none; border-top: 1px solid var(--border-subtle); }
+            .feature-grid { grid-template-columns: 1fr; }
+            .header-nav a:not(.header-cta) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="/" class="header-brand">attest</a>
+    <div class="header-nav">
+        <a href="#features">Features</a>
+        <a href="#construction">Construction</a>
+        <a href="#start" class="header-cta">Get started</a>
+    </div>
+</div>
+
+<div class="hero">
+    <div class="hero-tag" id="countdown">108 days to enforcement</div>
+    <h1>EU AI Act compliance.<br>One line of code.</h1>
+    <p>Attest wraps your AI models and automatically handles risk classification, inference logging, drift detection, and Annex IV documentation. Built for construction AI teams who need to ship — not hire a compliance department.</p>
+    <div class="hero-actions">
+        <a href="#start" class="btn btn-primary">Get started</a>
+        <a href="#features" class="btn btn-ghost">How it works</a>
+    </div>
+</div>
+
+<div class="code-section">
+    <div class="code-block">
+        <div class="code-bar">
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-file">inspection.py</span>
+        </div>
+        <pre><span class="kw">import</span> attest
+
+<span class="cm"># your existing model — nothing changes</span>
+model <span class="op">=</span> load_model(<span class="st">"yolov8-safety"</span>)
+
+<span class="cm"># one line: now it's logged, classified, and monitored</span>
+<span class="hl">model <span class="op">=</span> attest.<span class="fn">wrap</span>(model, <span class="st">name</span><span class="op">=</span><span class="st">"safety-inspector"</span>, <span class="st">purpose</span><span class="op">=</span><span class="st">"OSHA violation detection"</span>)</span>
+<span class="cm"># inference works exactly as before</span>
+result <span class="op">=</span> model(site_photo)</pre>
+    </div>
+</div>
+
+<div class="band">
+    <div class="band-item">
+        <div class="band-val red">78%</div>
+        <div class="band-label">of enterprises unprepared</div>
+    </div>
+    <div class="band-item">
+        <div class="band-val">€15M</div>
+        <div class="band-label">max penalty per violation</div>
+    </div>
+    <div class="band-item">
+        <div class="band-val red">83%</div>
+        <div class="band-label">have no AI inventory</div>
+    </div>
+</div>
+
+<div class="features" id="features">
+    <div class="features-title">What Attest does</div>
+    <div class="feature-grid">
+        <div class="feature">
+            <div class="feature-name">AI system inventory</div>
+            <div class="feature-desc">Automatically discovers and catalogs every AI system in your stack. 83% of companies can't do this today.</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Risk classification</div>
+            <div class="feature-desc">Maps each system to EU AI Act Annex III categories. Rule-based, deterministic, auditable.</div>
+            <div class="feature-ref">Art. 6 · Annex III</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Inference logging</div>
+            <div class="feature-desc">Every prediction logged with input metadata, output summary, confidence, and latency. Automatic audit trail.</div>
+            <div class="feature-ref">Art. 12</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Drift detection</div>
+            <div class="feature-desc">Statistical monitoring of confidence distributions, latency, and error rates. Alerts on degradation.</div>
+            <div class="feature-ref">Art. 72</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Annex IV documentation</div>
+            <div class="feature-desc">Technical documentation generated from runtime data. Not a questionnaire — actual evidence from your production systems.</div>
+            <div class="feature-ref">Art. 11 · Annex IV</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Compliance dashboard</div>
+            <div class="feature-desc">Real-time compliance posture. Gap analysis showing exactly what's missing, mapped to specific Articles.</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Webhook & email alerts</div>
+            <div class="feature-desc">Slack, PagerDuty, or email notifications for drift events, risk changes, and deadline reminders.</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">10-year retention</div>
+            <div class="feature-desc">Tamper-evident evidence logs stored for the mandatory 10-year retention period. SQLite or your own database.</div>
+            <div class="feature-ref">Art. 18</div>
+        </div>
+    </div>
+</div>
+
+<div class="vertical" id="construction">
+    <div class="vertical-title">Built for construction AI</div>
+    <div class="vertical-head">Safety AI is high-risk AI.</div>
+    <div class="vertical-sub">AI systems used for safety inspection, defect detection, and hazard monitoring on construction sites are classified as high-risk under the EU AI Act. That means mandatory documentation, logging, monitoring, and human oversight — enforced from August 2026.</div>
+
+    <div class="use-cases">
+        <div class="use-case">
+            <div class="uc-name">PPE violation detection</div>
+            <div class="uc-risk">high risk</div>
+        </div>
+        <div class="use-case">
+            <div class="uc-name">Structural defect inspection</div>
+            <div class="uc-risk">high risk</div>
+        </div>
+        <div class="use-case">
+            <div class="uc-name">Crane safety monitoring</div>
+            <div class="uc-risk">high risk</div>
+        </div>
+        <div class="use-case">
+            <div class="uc-name">Hazard zone detection</div>
+            <div class="uc-risk">high risk</div>
+        </div>
+        <div class="use-case">
+            <div class="uc-name">Quality control inspection</div>
+            <div class="uc-risk">high risk</div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section" id="start">
+    <h2 id="countdown-cta">108 days left.</h2>
+    <p>Install the SDK. Wrap your models. Generate your documentation.<br>We'll handle the compliance. You handle the construction.</p>
+    <div class="code-section" style="padding-bottom: 0; margin-top: 20px;">
+        <div class="code-block">
+            <div class="code-bar">
+                <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
+                <span class="code-file">terminal</span>
+            </div>
+            <pre>pip install attest-ai</pre>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span>attest</span>
+    <span>EU AI Act enforcement: 2 August 2026</span>
+</div>
+
+<script>
+const d = Math.ceil((new Date('2026-08-02') - new Date()) / 86400000);
+document.getElementById('countdown').textContent = d + ' days to enforcement';
+document.getElementById('countdown-cta').textContent = d + ' days left.';
+</script>
+</body>
+</html>
