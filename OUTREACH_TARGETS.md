@@ -1,7 +1,7 @@
-# Aegis — Construction AI: EU AI Act Compliance Outreach Targets
+# Attest — Construction AI Outreach Targets
 
 > **Prepared:** April 15, 2026
-> **Author:** Aegis Business Development
+> **Author:** Vertical AI LLC
 > **Critical Deadline:** EU AI Act high-risk obligations (Annex III) enforceable **August 2, 2026** (~3.5 months)
 > **Market Size:** AI in construction projected at $5.22B by 2032 (25.24% CAGR from $1.08B in 2025)
 > **Penalty Exposure:** Non-compliance fines up to **€35M or 7% of global annual turnover**
