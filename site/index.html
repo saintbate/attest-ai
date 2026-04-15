@@ -429,7 +429,7 @@
 </div>
 
 <div class="hero">
-    <div class="hero-tag" id="countdown">108 days to enforcement</div>
+    <div class="hero-tag" id="countdown"></div>
     <h1>EU AI Act compliance.<br>One line of code.</h1>
     <p>Attest wraps your AI models and automatically handles risk classification, inference logging, drift detection, and Annex IV documentation. Built for construction AI teams who need to ship — not hire a compliance department.</p>
     <div class="hero-actions">
@@ -546,7 +546,7 @@ result <span class="op">=</span> model(site_photo)</pre>
 </div>
 
 <div class="cta-section" id="start">
-    <h2 id="countdown-cta">108 days left.</h2>
+    <h2 id="countdown-cta"></h2>
     <p>Install the SDK. Wrap your models. Generate your documentation.<br>We'll handle the compliance. You handle the construction.</p>
     <div class="code-section" style="padding-bottom: 0; margin-top: 20px;">
         <div class="code-block">
@@ -565,9 +565,15 @@ result <span class="op">=</span> model(site_photo)</pre>
 </div>
 
 <script>
-const d = Math.ceil((new Date('2026-08-02') - new Date()) / 86400000);
-document.getElementById('countdown').textContent = d + ' days to enforcement';
-document.getElementById('countdown-cta').textContent = d + ' days left.';
+(function() {
+    const deadline = new Date('2026-08-02T00:00:00+02:00');
+    const now = new Date();
+    const d = Math.ceil((deadline - now) / 86400000);
+    const label = d > 0 ? d + ' days to enforcement' : 'Enforcement is live';
+    const cta = d > 0 ? d + ' days left.' : 'Enforcement is live.';
+    document.getElementById('countdown').textContent = label;
+    document.getElementById('countdown-cta').textContent = cta;
+})();
 </script>
 </body>
 </html>
