@@ -10,7 +10,7 @@ Hi Yakir,
 
 Congrats on the Series D — $166M is a clear signal that the market trusts what you're building.
 
-I'm reaching out because of your EU deployments specifically. VINCI's Dumez Côte d'Azur, Bouygues Bâtiment's P3 Persan project — your CV systems are running on EU soil analyzing construction site imagery. Under the EU AI Act, that's classified as high-risk AI (Annex III — worker management and safety components). Enforcement starts August 2.
+I'm reaching out because of your EU deployments specifically. Your partnerships with VINCI and Bouygues Construction put Buildots' CV systems on EU construction sites analyzing worker activity and site progress. Under the EU AI Act, that's classified as high-risk AI (Annex III — worker management and safety components). Enforcement starts August 2.
 
 The practical problem: VINCI and Bouygues will need to show their regulators that every AI system in their supply chain is compliant. That means they'll be asking you for Annex IV technical documentation, conformity assessments, logging evidence, and drift monitoring data. If you can't produce it, they have to stop using you — or risk fines up to €35M.
 

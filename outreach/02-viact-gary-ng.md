@@ -20,7 +20,7 @@ That means before viAct can legally deploy on a single EU construction site, you
 - Conformity assessment
 - EU database registration
 
-Building this in-house with a 50-person team while simultaneously expanding into a new market is a hard ask. We built Attest specifically for this problem — it's an SDK that wraps your CV models and handles the compliance infrastructure automatically. No separate compliance team needed.
+Building this compliance infrastructure in-house while simultaneously expanding into a new market is a hard ask. We built Attest specifically for this problem — it's an SDK that wraps your CV models and handles the compliance work automatically. No separate compliance team needed.
 
 Repo: https://github.com/saintbate/attest-ai
 Overview: https://attest-ai-eta.vercel.app

@@ -8,11 +8,11 @@
 
 Bonjour Abdelhakim,
 
-J'ai vu le travail de DeepQual sur l'inspection qualité par IA — la combinaison LiDAR + vision par ordinateur pour la détection de défauts contre les normes Eurocodes est un positionnement intelligent, surtout avec le marché français des réclamations construction à plus de 5 milliards d'euros.
+J'ai vu le travail de DeepQual sur l'inspection qualité par IA — la combinaison LiDAR + vision par ordinateur pour la détection de défauts contre les normes Eurocodes est un positionnement intelligent.
 
-Je vous contacte au sujet du AI Act européen. En tant qu'entreprise française dont l'IA prend des décisions automatisées de conformité/non-conformité sur l'intégrité structurelle, DeepQual est clairement classé comme système IA à haut risque (Annexe III). L'application commence le 2 août 2026 — dans moins de 4 mois.
+Je vous contacte au sujet de l'AI Act européen. En tant qu'entreprise française dont l'IA prend des décisions automatisées de conformité/non-conformité sur l'intégrité structurelle, DeepQual est clairement classé comme système IA à haut risque (Annexe III). Il entre en application le 2 août 2026 — dans moins de 4 mois.
 
-Les obligations pour un système comme le vôtre sont lourdes : système de gestion des risques, documentation technique Annexe IV, journalisation des inférences, mécanismes de surveillance humaine, évaluation de conformité, et enregistrement dans la base de données européenne. Pour une équipe de moins de 5 personnes, construire cette infrastructure en interne n'est pas réaliste.
+Les obligations pour un système comme le vôtre sont lourdes : système de gestion des risques, documentation technique Annexe IV, journalisation des inférences, mécanismes de surveillance humaine, évaluation de conformité, et enregistrement dans la base de données européenne. Construire cette infrastructure en interne représente une charge importante pour une équipe early-stage.
 
 Nous avons construit Attest exactement pour ce cas. C'est un SDK Python — une ligne de code enveloppe votre modèle et gère automatiquement la classification des risques, la journalisation, la détection de dérive, et la génération de documentation Annexe IV à partir des données de production.
 
