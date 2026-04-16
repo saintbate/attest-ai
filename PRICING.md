@@ -163,5 +163,58 @@ what objection to handle.
 
 ---
 
+## 9. How we take payment
+
+At current scale (pre-first-customer to first ~10 paying logos), the
+payment stack is **Stripe Invoicing, sent manually from the dashboard**.
+No integration code, no self-serve checkout, no subscription engine.
+
+### The stack
+
+| Layer | Tool | Why |
+|---|---|---|
+| Legal entity | **Vertical AI LLC** | Already exists. Must own the bank account and Stripe account. |
+| Business bank | **Mercury** (or Relay) | Free, opens in days, integrates with Stripe cleanly. Never route to a personal account. |
+| Invoicing | **Stripe Invoicing** (not Checkout, not Subscriptions) | Hosted payment pages, ACH + card, zero code. |
+| Bookkeeping | Spreadsheet until 10 customers, then **QuickBooks Online** or **Wave** | Not Stripe's job. |
+
+### Fees
+
+- **ACH:** 0.8%, **capped at $5 per transaction.** Preferred for anything >$1k.
+- **Card:** 2.9% + $0.30. On a $12k Team invoice that's $348 — steer customers to ACH when you can.
+- **Stripe Tax (optional):** ~$0.50 per invoice. Worth enabling the moment we invoice a non-US customer, not before.
+
+### Payment terms
+
+| Product | Term | Rationale |
+|---|---|---|
+| Pilot ($2,500) | **Due on receipt** or Net 15 | Small enough to bypass corporate AP; ask for fast pay. |
+| Team annual ($12k) | **Net 30** | B2B default. Don't fight it. |
+| Scale annual ($36k) | **Net 30**, or 50% upfront / 50% Net 60 if requested | Let procurement feel like they won something. |
+| Multi-year | **Annual upfront, one invoice per year** | Avoid renewal fatigue, keep revenue recognition clean. |
+
+### The invoice-sending checklist (≤ 5 minutes)
+
+1. Customer agrees verbally or by email → same day, send Stripe invoice.
+2. Line items named in the customer's language: "Attest Team annual subscription — up to 5 high-risk AI systems" (not "SaaS fee").
+3. Include the **start and end dates of the subscription period** in the line item description.
+4. Attach a short one-page PDF with: scope, support commitment, data handling, cancellation terms. (TODO: draft this template — see *Open questions*.)
+5. Send. Follow up at +7 days if unpaid; +21 days if still unpaid, get on a call.
+
+### EU customers
+
+- **Reverse-charge VAT** is the norm for B2B sales to EU-established companies with a valid VAT ID. The invoice shows 0% VAT and a note: *"Reverse charge applies — Article 196 of Council Directive 2006/112/EC."*
+- Capture the customer's VAT ID on the order form. Stripe Tax automates the invoice markup.
+- Do **not** collect VAT yourself until we have an EU establishment — that's a different tax regime entirely.
+
+### When to revisit this section
+
+- Customer #5 signs: evaluate Stripe Subscriptions for auto-renewal.
+- Customer #10 signs: evaluate self-serve checkout for the Pilot tier only.
+- First EU customer signs: enable Stripe Tax, add VAT field to the order form.
+- First customer churns: document the cancellation flow (pro-rated refund? sunset period? data export?).
+
+---
+
 *Iterate this doc after every discovery call. Prices go up the moment we
 have three paying logos; they don't go down after that.*
