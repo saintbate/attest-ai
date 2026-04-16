@@ -22,6 +22,7 @@ from rich.table import Table
 
 from attest.classify.engine import classify_all, classify_system, get_compliance_gap
 from attest.docs.generator import generate_annex_iv
+from attest.docs.oscal import generate_oscal_assessment_results
 from attest.monitor.drift import detect_drift, DriftSeverity
 from attest.sdk.registry import RiskLevel, get_registry
 from attest.store.db import init_db, save_system, save_inference_batch, save_document
@@ -127,7 +128,14 @@ def classify():
 @main.command()
 @click.option("--output", "-o", type=click.Path(), help="Output directory for docs")
 @click.option("--provider", default="", help="Provider/company name for documentation")
-def docs(output: str | None, provider: str):
+@click.option(
+    "--format",
+    "fmt",
+    type=click.Choice(["markdown", "oscal", "both"]),
+    default="markdown",
+    help="Output format: markdown (Annex IV), oscal (JSON assessment results), or both",
+)
+def docs(output: str | None, provider: str, fmt: str):
     """Generate Annex IV technical documentation for all high-risk systems."""
     registry = get_registry()
     systems = registry.all_systems()
@@ -140,27 +148,44 @@ def docs(output: str | None, provider: str):
     output_dir.mkdir(parents=True, exist_ok=True)
 
     generated = 0
-    for system in systems:
-        result = classify_system(system)
-        if result.risk_level in (RiskLevel.HIGH, RiskLevel.LIMITED):
-            doc_path = output_dir / f"{system.name}_{system.system_id}_annex_iv.md"
-            doc = generate_annex_iv(
-                system,
-                result,
-                provider_name=provider or "Provider Name (to be completed)",
-                output_path=doc_path,
-            )
-            generated += 1
-            console.print(f"[green]Generated:[/green] {doc_path}")
+    if fmt in ("markdown", "both"):
+        for system in systems:
+            result = classify_system(system)
+            if result.risk_level in (RiskLevel.HIGH, RiskLevel.LIMITED):
+                doc_path = output_dir / f"{system.name}_{system.system_id}_annex_iv.md"
+                generate_annex_iv(
+                    system,
+                    result,
+                    provider_name=provider or "Provider Name (to be completed)",
+                    output_path=doc_path,
+                )
+                generated += 1
+                console.print(f"[green]Generated:[/green] {doc_path}")
+
+    if fmt in ("oscal", "both"):
+        oscal_path = output_dir / "attest_assessment_results.oscal.json"
+        generate_oscal_assessment_results(
+            systems,
+            provider_name=provider or "Provider Name (to be completed)",
+            output_path=oscal_path,
+        )
+        generated += 1
+        console.print(f"[green]Generated:[/green] {oscal_path} (OSCAL-aligned)")
 
     if generated == 0:
         console.print("[yellow]No high-risk or limited-risk systems found. No docs generated.[/yellow]")
     else:
-        console.print(f"\n[bold green]{generated} document(s) generated in {output_dir}/[/bold green]")
+        console.print(f"\n[bold green]{generated} artifact(s) generated in {output_dir}/[/bold green]")
 
 
 @main.command(name="monitor")
-def monitor_cmd():
+@click.option(
+    "--method",
+    type=click.Choice(["ks", "mmd", "mannwhitney"]),
+    default="ks",
+    help="Drift detection method: ks (default), mmd (kernel-based), mannwhitney",
+)
+def monitor_cmd(method: str):
     """Run drift detection on all registered systems."""
     registry = get_registry()
     systems = registry.all_systems()
@@ -170,7 +195,7 @@ def monitor_cmd():
         return
 
     for system in systems:
-        report = detect_drift(system)
+        report = detect_drift(system, method=method)
 
         if not report.has_drift:
             console.print(f"[green]✓[/green] {system.name}: No drift detected")

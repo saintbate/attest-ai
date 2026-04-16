@@ -371,6 +371,25 @@
             color: var(--red);
         }
 
+        .uc-risk.ctx {
+            background: rgba(240, 160, 0, 0.12);
+            color: var(--amber);
+        }
+
+        /* ── SOURCES ── */
+
+        .sources {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 32px 48px;
+            font-size: 11.5px;
+            color: var(--text-faint);
+            line-height: 1.7;
+        }
+        .sources p { margin-bottom: 4px; }
+        .sources a { color: var(--text-muted); text-decoration: underline; }
+        .sources a:hover { color: var(--text); }
+
         /* ── CTA ── */
 
         .cta-section {
@@ -460,16 +479,16 @@ result <span class="op">=</span> model(site_photo)</pre>
 
 <div class="band">
     <div class="band-item">
-        <div class="band-val red">78%</div>
-        <div class="band-label">of enterprises unprepared</div>
+        <div class="band-val red">18%</div>
+        <div class="band-label">feel "highly prepared" for the AI Act<sup>1</sup></div>
     </div>
     <div class="band-item">
-        <div class="band-val">€15M</div>
-        <div class="band-label">max penalty per violation</div>
+        <div class="band-val">€15M / 3%</div>
+        <div class="band-label">max fine, whichever is higher<sup>2</sup></div>
     </div>
     <div class="band-item">
-        <div class="band-val red">83%</div>
-        <div class="band-label">have no AI inventory</div>
+        <div class="band-val red">2 Aug</div>
+        <div class="band-label">2026 enforcement for high-risk</div>
     </div>
 </div>
 
@@ -478,7 +497,7 @@ result <span class="op">=</span> model(site_photo)</pre>
     <div class="feature-grid">
         <div class="feature">
             <div class="feature-name">AI system inventory</div>
-            <div class="feature-desc">Automatically discovers and catalogs every AI system in your stack. 83% of companies can't do this today.</div>
+            <div class="feature-desc">Catalogs every model you wrap — name, framework, purpose, inference volume, error rate. The foundation for an Article 11 technical file.</div>
         </div>
         <div class="feature">
             <div class="feature-name">Risk classification</div>
@@ -492,12 +511,12 @@ result <span class="op">=</span> model(site_photo)</pre>
         </div>
         <div class="feature">
             <div class="feature-name">Drift detection</div>
-            <div class="feature-desc">Statistical monitoring of confidence distributions, latency, and error rates. Alerts on degradation.</div>
+            <div class="feature-desc">Two-sample statistical tests (KS, MMD, Mann-Whitney) over confidence, latency, and error-rate streams. Reports p-value plus effect size.</div>
             <div class="feature-ref">Art. 72</div>
         </div>
         <div class="feature">
             <div class="feature-name">Annex IV documentation</div>
-            <div class="feature-desc">Technical documentation generated from runtime data. Not a questionnaire — actual evidence from your production systems.</div>
+            <div class="feature-desc">Markdown Annex IV files and OSCAL-aligned JSON assessment results, generated from your runtime data. Fields you still need to fill in are flagged — not hidden.</div>
             <div class="feature-ref">Art. 11 · Annex IV</div>
         </div>
         <div class="feature">
@@ -510,7 +529,7 @@ result <span class="op">=</span> model(site_photo)</pre>
         </div>
         <div class="feature">
             <div class="feature-name">10-year retention</div>
-            <div class="feature-desc">Tamper-evident evidence logs stored for the mandatory 10-year retention period. SQLite or your own database.</div>
+            <div class="feature-desc">Timestamped evidence logs persisted to SQLite or your own database, covering the mandatory 10-year retention window.</div>
             <div class="feature-ref">Art. 18</div>
         </div>
     </div>
@@ -518,31 +537,36 @@ result <span class="op">=</span> model(site_photo)</pre>
 
 <div class="vertical" id="construction">
     <div class="vertical-title">Built for construction AI</div>
-    <div class="vertical-head">Safety AI is high-risk AI.</div>
-    <div class="vertical-sub">AI systems used for safety inspection, defect detection, and hazard monitoring on construction sites are classified as high-risk under the EU AI Act. That means mandatory documentation, logging, monitoring, and human oversight — enforced from August 2026.</div>
+    <div class="vertical-head">Safety AI on the jobsite is high-risk.</div>
+    <div class="vertical-sub">Construction safety AI typically enters the EU AI Act as either a safety component of critical infrastructure (Article 6(1), Annex I) or a worker-monitoring system (Annex III §4). Either route triggers mandatory documentation, logging, monitoring, and human oversight — enforced from 2 August 2026. The specific classification depends on deployment context; Attest runs the analysis per system.</div>
 
     <div class="use-cases">
         <div class="use-case">
             <div class="uc-name">PPE violation detection</div>
-            <div class="uc-risk">high risk</div>
+            <div class="uc-risk">likely high risk</div>
         </div>
         <div class="use-case">
             <div class="uc-name">Structural defect inspection</div>
-            <div class="uc-risk">high risk</div>
+            <div class="uc-risk">likely high risk</div>
         </div>
         <div class="use-case">
             <div class="uc-name">Crane safety monitoring</div>
-            <div class="uc-risk">high risk</div>
+            <div class="uc-risk">likely high risk</div>
         </div>
         <div class="use-case">
             <div class="uc-name">Hazard zone detection</div>
-            <div class="uc-risk">high risk</div>
+            <div class="uc-risk">likely high risk</div>
         </div>
         <div class="use-case">
             <div class="uc-name">Quality control inspection</div>
-            <div class="uc-risk">high risk</div>
+            <div class="uc-risk ctx">context-dependent</div>
         </div>
     </div>
+</div>
+
+<div class="sources">
+    <p><sup>1</sup> Deloitte, <em>The EU AI Act — What Companies Need To Know</em> (2024): 18% of Europe-based respondents reported being "highly prepared" for AI risk and governance.</p>
+    <p><sup>2</sup> EU AI Act (Regulation 2024/1689), Article 99. High-risk non-compliance: up to €15M or 3% of global annual turnover — whichever is higher. Prohibited practices: up to €35M or 7%. Enforcement for high-risk begins 2 August 2026.</p>
 </div>
 
 <div class="cta-section" id="start">
