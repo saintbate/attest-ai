@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing — Attest</title>
+    <meta name="description" content="Simple per-system pricing for EU AI Act compliance. Pilot from $2,500. Team from $12,000/year. No free tier — a paid pilot is a commitment on both sides.">
+    <style>
+        :root {
+            --bg: #0b0d11;
+            --surface: #12151c;
+            --surface-2: #181c26;
+            --border: #1f2432;
+            --border-subtle: #161a24;
+            --text: #c8cad0;
+            --text-strong: #ecedf0;
+            --text-muted: #6b7084;
+            --text-faint: #3d4258;
+            --red: #e5484d;
+            --red-dim: rgba(229, 72, 77, 0.12);
+            --amber: #f0a000;
+            --green: #30a46c;
+            --green-dim: rgba(48, 164, 108, 0.10);
+            --blue: #3b82f6;
+            --blue-dim: rgba(59, 130, 246, 0.08);
+            --mono: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', monospace;
+            --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── HEADER ── */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            background: rgba(11, 13, 17, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .header-brand {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-strong);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .header-nav a:hover { color: var(--text); }
+        .header-nav a.active { color: var(--text-strong); }
+
+        .header-cta {
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-strong) !important;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 5px;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .header-cta:hover {
+            background: #1e2333;
+            border-color: #2a3048;
+        }
+
+        /* ── HERO ── */
+
+        .hero {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 80px 32px 48px;
+            text-align: center;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: var(--surface-2);
+            border: 1px solid var(--border-subtle);
+            padding: 3px 10px;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .hero h1 {
+            font-size: 34px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 15.5px;
+            color: var(--text-muted);
+            margin-top: 14px;
+            line-height: 1.6;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── TIERS ── */
+
+        .tiers {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 32px 32px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .tier {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tier.featured {
+            border-color: #2a3048;
+            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.06);
+            background: linear-gradient(180deg, var(--surface) 0%, #13171f 100%);
+        }
+
+        .tier-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .tier.featured .tier-name {
+            color: var(--blue);
+        }
+
+        .tier-tag {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            min-height: 16px;
+        }
+
+        .tier-price {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.03em;
+            font-family: var(--mono);
+            line-height: 1.1;
+        }
+
+        .tier-unit {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .tier-features {
+            list-style: none;
+            margin: 24px 0 24px;
+            padding: 0;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 20px;
+            flex: 1;
+        }
+
+        .tier-features li {
+            font-size: 13px;
+            color: var(--text);
+            padding: 5px 0 5px 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .tier-features li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 10px;
+            height: 1px;
+            background: var(--text-faint);
+        }
+
+        .tier-features li.muted { color: var(--text-muted); }
+
+        .tier-cta {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.15s;
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: transparent;
+        }
+        .tier-cta:hover {
+            border-color: #2a3048;
+            color: var(--text-strong);
+        }
+        .tier.featured .tier-cta {
+            background: var(--text-strong);
+            color: var(--bg);
+            border-color: var(--text-strong);
+        }
+        .tier.featured .tier-cta:hover { background: #fff; }
+
+        /* ── ENTERPRISE ROW ── */
+
+        .enterprise {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 32px 48px;
+        }
+
+        .enterprise-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px 28px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .ent-head {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-strong);
+            margin-bottom: 4px;
+        }
+
+        .ent-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .ent-price {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+        .ent-price strong {
+            color: var(--text-strong);
+            font-family: var(--mono);
+            font-weight: 500;
+        }
+
+        /* ── INCLUDED BAND ── */
+
+        .included {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 48px 32px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .included-title {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 20px;
+        }
+
+        .included-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .inc {
+            font-size: 13px;
+            color: var(--text);
+            padding: 12px 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .inc-head {
+            color: var(--text-strong);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .inc-ref {
+            font-size: 11px;
+            font-family: var(--mono);
+            color: var(--text-faint);
+            margin-top: 4px;
+        }
+
+        /* ── ANCHOR TABLE ── */
+
+        .compare {
+            max-width: 840px;
+            margin: 0 auto;
+            padding: 48px 32px;
+        }
+
+        .compare-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .compare-sub {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.55;
+        }
+
+        .compare-table {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            border-collapse: collapse;
+            background: var(--surface);
+        }
+
+        .compare-table th,
+        .compare-table td {
+            text-align: left;
+            font-size: 13px;
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .compare-table th {
+            font-weight: 500;
+            color: var(--text-faint);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: var(--surface-2);
+        }
+
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        .compare-table td:last-child {
+            font-family: var(--mono);
+            color: var(--text-strong);
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        /* ── NOT INCLUDED ── */
+
+        .not-included {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 32px 32px 56px;
+        }
+
+        .ni-title {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+        }
+
+        .ni-list {
+            list-style: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 0;
+        }
+
+        .ni-list li {
+            padding: 10px 20px;
+            font-size: 13px;
+            color: var(--text);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .ni-list li:last-child { border-bottom: none; }
+
+        .ni-list li span {
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+            font-size: 12px;
+        }
+
+        /* ── FAQ ── */
+
+        .faq {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 32px 32px 64px;
+        }
+
+        .faq-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .faq-item {
+            border-top: 1px solid var(--border-subtle);
+            padding: 20px 0;
+        }
+        .faq-item:last-child {
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .faq-q {
+            font-size: 14.5px;
+            font-weight: 500;
+            color: var(--text-strong);
+            margin-bottom: 6px;
+        }
+
+        .faq-a {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        /* ── CTA ── */
+
+        .cta-section {
+            text-align: center;
+            padding: 64px 32px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .cta-section h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-strong);
+            letter-spacing: -0.02em;
+        }
+
+        .cta-section p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            font-size: 13px;
+            font-weight: 500;
+            padding: 9px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: var(--text-strong);
+            color: var(--bg);
+        }
+        .btn-primary:hover { background: #fff; }
+
+        /* ── FOOTER ── */
+
+        .footer {
+            padding: 20px 32px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-faint);
+        }
+
+        /* ── RESPONSIVE ── */
+
+        @media (max-width: 880px) {
+            .tiers { grid-template-columns: 1fr; }
+            .included-grid { grid-template-columns: 1fr 1fr; }
+            .enterprise-card { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 60px 20px 32px; }
+            .hero h1 { font-size: 26px; }
+            .included-grid { grid-template-columns: 1fr; }
+            .header-nav a:not(.header-cta):not(.active) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="/" class="header-brand">attest</a>
+    <div class="header-nav">
+        <a href="/#features">Features</a>
+        <a href="/pricing.html" class="active">Pricing</a>
+        <a href="/#construction">Construction</a>
+        <a href="mailto:batemannick66@gmail.com?subject=Attest%20pilot%20inquiry" class="header-cta">Get started</a>
+    </div>
+</div>
+
+<div class="hero">
+    <div class="hero-tag" id="countdown"></div>
+    <h1>Pricing that fits a small team,<br>not an enterprise GRC contract.</h1>
+    <p>Per-system pricing. No seats, no surprise overages, no free tier. A paid pilot is a commitment from both sides — we're serious about building this and we want customers who are serious about shipping compliant AI.</p>
+</div>
+
+<div class="tiers">
+
+    <div class="tier">
+        <div class="tier-name">Pilot</div>
+        <div class="tier-tag">90 days · get to your first Annex IV</div>
+        <div class="tier-price">$2,500</div>
+        <div class="tier-unit">flat, 90-day engagement</div>
+        <ul class="tier-features">
+            <li>Up to 3 AI systems</li>
+            <li>Founder-led onboarding call</li>
+            <li>Classification + written gap analysis</li>
+            <li>First Annex IV + OSCAL JSON export</li>
+            <li>Drift alerts on 1 metric per system</li>
+            <li class="muted">Converts to Team on week 12 unless you say otherwise</li>
+        </ul>
+        <a href="mailto:batemannick66@gmail.com?subject=Attest%20pilot" class="tier-cta">Start a pilot</a>
+    </div>
+
+    <div class="tier featured">
+        <div class="tier-name">Team</div>
+        <div class="tier-tag">Default for a single product team</div>
+        <div class="tier-price">$12,000</div>
+        <div class="tier-unit">per year · or $1,200/mo on annual commit</div>
+        <ul class="tier-features">
+            <li>Up to 5 high-risk AI systems</li>
+            <li>Unlimited Annex IV + OSCAL regenerations</li>
+            <li>Drift detection (KS, MMD, Mann-Whitney)</li>
+            <li>Compliance dashboard + inventory</li>
+            <li>10M inference records / year included</li>
+            <li>Email support, 2 business-day response</li>
+        </ul>
+        <a href="mailto:batemannick66@gmail.com?subject=Attest%20Team%20plan" class="tier-cta">Talk to us</a>
+    </div>
+
+    <div class="tier">
+        <div class="tier-name">Scale</div>
+        <div class="tier-tag">Multiple EU products or regulated deployers</div>
+        <div class="tier-price">$36,000</div>
+        <div class="tier-unit">per year</div>
+        <ul class="tier-features">
+            <li>Up to 20 high-risk AI systems</li>
+            <li>SSO (Google, Azure AD)</li>
+            <li>Full 10-year retention built in</li>
+            <li>Webhook fan-out (Slack, PagerDuty, custom)</li>
+            <li>Priority support, 1 business-day response</li>
+            <li>Quarterly regulation-review call</li>
+        </ul>
+        <a href="mailto:batemannick66@gmail.com?subject=Attest%20Scale%20plan" class="tier-cta">Talk to us</a>
+    </div>
+
+</div>
+
+<div class="enterprise">
+    <div class="enterprise-card">
+        <div>
+            <div class="ent-head">Enterprise</div>
+            <div class="ent-sub">More than 20 systems, data residency requirements, SIEM integration, master agreements, or a security questionnaire longer than this page.</div>
+            <div class="ent-price"><strong>From $75,000 / year</strong> — custom scope</div>
+        </div>
+        <a href="mailto:batemannick66@gmail.com?subject=Attest%20Enterprise" class="btn btn-primary">Contact sales</a>
+    </div>
+</div>
+
+<div class="included">
+    <div class="included-title">Included in every paid plan</div>
+    <div class="included-grid">
+        <div class="inc">
+            <div class="inc-head">AI system inventory</div>
+            <div>Every model you wrap, catalogued.</div>
+            <div class="inc-ref">Art. 11</div>
+        </div>
+        <div class="inc">
+            <div class="inc-head">Risk classification</div>
+            <div>Rule-based mapping to Annex III categories.</div>
+            <div class="inc-ref">Art. 6 · Annex III</div>
+        </div>
+        <div class="inc">
+            <div class="inc-head">Inference logging</div>
+            <div>Input metadata, confidence, latency, errors.</div>
+            <div class="inc-ref">Art. 12</div>
+        </div>
+        <div class="inc">
+            <div class="inc-head">Drift detection</div>
+            <div>KS, MMD, and Mann-Whitney two-sample tests.</div>
+            <div class="inc-ref">Art. 72</div>
+        </div>
+        <div class="inc">
+            <div class="inc-head">Annex IV documentation</div>
+            <div>Markdown + OSCAL-aligned JSON, regenerable.</div>
+            <div class="inc-ref">Art. 11 · Annex IV</div>
+        </div>
+        <div class="inc">
+            <div class="inc-head">Compliance dashboard</div>
+            <div>Real-time gap analysis, per Article.</div>
+        </div>
+        <div class="inc">
+            <div class="inc-head">Webhook & email alerts</div>
+            <div>Drift events, risk changes, deadline reminders.</div>
+        </div>
+        <div class="inc">
+            <div class="inc-head">SQLite or bring-your-own DB</div>
+            <div>Evidence stays on your infra if you want it to.</div>
+        </div>
+    </div>
+</div>
+
+<div class="compare">
+    <div class="compare-title">What you're actually comparing us to</div>
+    <div class="compare-sub">Attest at $12k/year sits at roughly 10% of hiring one compliance engineer, and 15–25% of enterprise governance tooling — while being continuous instead of one-shot.</div>
+    <table class="compare-table">
+        <thead>
+            <tr><th>Alternative</th><th>Typical annual cost</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Hiring an in-house compliance / ML-ops engineer</td><td>€120–180k</td></tr>
+            <tr><td>Enterprise AI governance platform</td><td>$50–200k</td></tr>
+            <tr><td>ML observability platform</td><td>$75–150k+</td></tr>
+            <tr><td>One-off Annex IV consulting engagement</td><td>$30–60k (one-shot)</td></tr>
+            <tr><td>One AI Act fine, high-risk non-compliance</td><td>up to €15M or 3% of turnover</td></tr>
+            <tr><td><strong style="color: var(--text-strong)">Attest Team</strong></td><td><strong style="color: var(--text-strong)">$12,000 / yr</strong></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="not-included">
+    <div class="ni-title">What Attest does not do</div>
+    <ul class="ni-list">
+        <li>Act as a notified body<span>We don't issue conformity certificates. You still need the right assessment route for your risk class.</span></li>
+        <li>Provide legal advice<span>Our classification is a starting point. Your legal and compliance teams sign off.</span></li>
+        <li>Replace your technical writer<span>We generate the Annex IV draft from real runtime data. You edit, contextualize, and approve.</span></li>
+        <li>Sell unlimited-everything pricing<span>No pay-what-you-want, no revenue share, no equity-for-license. It's a software subscription.</span></li>
+    </ul>
+</div>
+
+<div class="faq">
+    <div class="faq-title">Pricing questions we've heard</div>
+
+    <div class="faq-item">
+        <div class="faq-q">What counts as an "AI system"?</div>
+        <div class="faq-a">One distinct model deployed for one purpose. A single PPE-detection model served to 50 construction sites is one system. A separate hazard-classification model is a second system. If you fine-tune the same base model for a new use case, that's a new system.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Why no free tier?</div>
+        <div class="faq-a">A paid pilot is a two-way commitment. We invest in onboarding you; you invest in actually integrating and using the product. Free users ghost; paying customers give feedback. If $2,500 is genuinely blocking, ask us — budget shouldn't be the only reason not to start.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">I'm a US-only company. Do I need this?</div>
+        <div class="faq-a">If any of your customers deploy your AI system to users in the EU, the Act applies to you as a provider. Most construction-AI vendors selling into Europe already fall under it — even if your HQ is in San Francisco.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Where does my data live?</div>
+        <div class="faq-a">By default, inference metadata lives in a local SQLite database on your infrastructure. We never receive raw inputs or outputs. For Enterprise, we support pipelining evidence logs to your own SIEM or data warehouse.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">What if I have 6 systems — do I need Scale?</div>
+        <div class="faq-a">No. The Team limit is soft. If you're at 5–7 systems and growing, start on Team and we'll move you to Scale when you hit 10. We'd rather have you on the right tier than stall the integration.</div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Multi-year discount?</div>
+        <div class="faq-a">10% off Team for 2 years, 15% off for 3 years. Scale gets 15% / 20% on the same terms. Written into the order form.</div>
+    </div>
+</div>
+
+<div class="cta-section">
+    <h2>A 30-minute call beats a ten-email thread.</h2>
+    <p>Tell us what you're building. We'll tell you honestly whether Attest fits.</p>
+    <a href="mailto:batemannick66@gmail.com?subject=Attest%20intro%20call" class="btn btn-primary">Book a call</a>
+</div>
+
+<div class="footer">
+    <span>attest · Vertical AI LLC</span>
+    <span>EU AI Act enforcement: 2 August 2026</span>
+</div>
+
+<script>
+(function() {
+    const deadline = new Date('2026-08-02T00:00:00+02:00');
+    const now = new Date();
+    const d = Math.ceil((deadline - now) / 86400000);
+    const label = d > 0 ? d + ' days to enforcement' : 'Enforcement is live';
+    const el = document.getElementById('countdown');
+    if (el) el.textContent = label;
+})();
+</script>
+</body>
+</html>

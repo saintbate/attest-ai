@@ -145,10 +145,15 @@ what objection to handle.
 
 ---
 
-## 8. Open questions for the next 30 days
+## 8. Decisions and open questions for the next 30 days
 
-- [ ] Does the $2,500 pilot close faster than a $0 pilot? (Testable with
-  the next two discovery calls — offer both, see which gets signed.)
+**Decided:**
+- **No free pilots, ever.** A paid pilot is a signal that we believe in the
+  product and that the buyer believes the problem is real. Free customers
+  ghost; paying customers give feedback. If budget is truly the blocker,
+  we will drop the pilot to $1,500, but the invoice still ships.
+
+**Still open:**
 - [ ] Does OSCAL output actually move the needle, or is Markdown enough
   for today's buyers? (Ask directly in the demo.)
 - [ ] At what customer count do we need a real billing system vs. a
