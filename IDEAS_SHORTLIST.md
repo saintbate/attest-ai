@@ -275,6 +275,93 @@ result:
 
 ---
 
+## 5a. Constraint-relaxation notes (Apr 2026)
+
+### Time horizon — what a current-bias search missed
+
+The first pass anchored on 2024-2028 regulatory windows. To test the
+blind spot, I scored four mature-market opportunities where the
+forcing function is older than five years:
+
+| Candidate | Score | Why it's in the blind spot | Verdict |
+|---|---|---|---|
+| Export controls (EAR/ITAR) + AI Diffusion interim rule | 23 | BIS AI rule (2025) sits on 1990s EAR; most compliance vendors haven't touched it | Holding pen |
+| Mainframe / legacy modernization with AI assist | 22 | Microsoft + Galileo landed here already; long tail exists but not sexy | Kill |
+| GxP pharma manufacturing documentation | 22 | Benchling holds the obvious wedge; deep niches exist but require pharma co-sell | Kill |
+| Research reproducibility infrastructure | 18 | Unsolved since ~2005; low buyer clarity, no one pays, but real societal value | Kill — note: a grant-funded version of this could be worth a 2-week spike if funding cycle permits |
+
+**Net:** The current-bias didn't cost us a better candidate. It did
+leave export-controls in the holding pen as the one mature-market
+option worth rescoring if Attest fails and we pivot to a
+compliance-adjacent bet.
+
+### Personal-fit constraint — what opens up with a team
+
+When I drop the solo-founder assumption (dimension 6 scored as 4
+rather than 2 for team-gated ideas), most team-gated candidates
+compress to Attest-level (25-27). One clearly beats Attest:
+
+#### Team-gated Candidate A — Full healthcare AI ops platform
+
+- **One-line thesis:** End-to-end ML ops stack purpose-built for AI
+  medical device vendors. Covers data collection → labeling →
+  training → FDA validation → PCCP filings → post-market
+  surveillance. Not a monitoring tool (that's Attest-FDA); a full
+  ops platform.
+- **Buyer:** CTO or Chief Product Officer at an AI medical device
+  company with 20-200 FTE. Budget line: R&D infrastructure +
+  regulatory operations combined.
+- **MVP shape:** 3-4 months with a 2-person team. One engineer +
+  one clinical / FDA-RA domain expert.
+- **Defensibility path:** FDA workflow + data network effects
+  (training data pooling across customers under BAA) + regulatory
+  precedent. Very sticky once embedded.
+- **Biggest risk:** Requires a credible clinical or FDA-RA
+  co-founder. Without one, this is unbuildable — not because of
+  engineering, but because enterprise medical AI customers will not
+  trust a tool without FDA-native leadership.
+- **Score (with co-founder):** U/BA/D/BC/TAM/PF/SV =
+  4/3/4/4/5/4/5 → **29 / 35**
+- **When does this become relevant?** (a) If Attest-FDA pilots
+  close and expansion requests suggest the broader ops platform is
+  wanted. (b) If the founder meets an FDA RA or clinical-AI expert
+  looking for a technical co-founder.
+
+#### Other team-gated candidates (briefly)
+
+- **Defense AI acquisition compliance:** 26/35 with a cleared
+  co-founder. Compresses to Attest's score. Hard to justify over
+  Attest without a defense-specific warm intro.
+- **Bank SR 11-7 model risk (full):** 25/35 with FS co-founder.
+  Crowded (Validmind, Modelop). Doesn't beat Attest.
+- **Pharma clinical trial AI ops:** 25/35 with regulatory co-founder.
+  Long sales cycle + crowded incumbents (Medidata, Veeva).
+- **Public-sector AI procurement testing:** 24/35 with gov-sales
+  co-founder. Slow budgets.
+
+### What this tells us
+
+1. **The solo-founder constraint isn't what's hiding a great
+   opportunity.** Most team-gated options produce Attest-level
+   scores, not 30+ scores.
+2. **The one exception (full healthcare AI ops) is adjacent to
+   Candidate 1 (Attest-FDA), not a distinct product direction.**
+   Candidate 1 is the narrow version a solo founder can ship;
+   "healthcare AI ops" is the expanded version a 3-5 person team
+   could ship 12 months later. Same buyer, same vertical, same
+   starting SDK.
+3. **The ordering stays the same.** Attest (26) → Attest-FDA (27)
+   → full healthcare AI ops (29-with-co-founder) is a coherent
+   growth path, not a branching decision tree. If Attest
+   construction works, we expand into medical; if we hire a
+   clinical co-founder, we widen into full ops.
+4. **This does not change today's plan.** Run Attest outreach.
+   Follow up in 2-3 weeks. Rescore this section whenever the
+   outreach signal shifts or a potential co-founder conversation
+   surfaces.
+
+---
+
 ## 5. Operating rules
 
 1. **Don't populate this list unless Attest signal is ambiguous or
