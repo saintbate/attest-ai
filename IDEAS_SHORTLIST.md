@@ -120,19 +120,158 @@ clearance gatekeeping, ethical bright lines.
 
 ## 4. Active candidate list
 
-> **[POPULATE AFTER RUNNING RESEARCH TOOL]**
->
-> Format per candidate:
->
-> ### Candidate N — <Short name>
-> - **One-line thesis:** ...
-> - **Buyer:** ... (role, company type, budget line)
-> - **Forcing function:** ... (regulation, deadline, cycle)
-> - **MVP shape:** ... (what ships in 30 days)
-> - **Defensibility path:** ... (what compounds over 18 months)
-> - **Biggest risk:** ... (the one thing that kills it)
-> - **Score:** U/BA/D/BC/TAM/PF/SV = n/n/n/n/n/n/n → **total / 35**
-> - **What would have to be true to pivot here?** ...
+### Findings (first pass — Apr 2026, themes A / B / E)
+
+**Synthesised 11 candidate product ideas from themes A, B, E.
+Strict-conservative scoring (round down on ambiguity) produced one
+finding worth naming:**
+
+> **No pure green-field idea beats Attest on the rubric.**
+
+The three candidates that cleared the minimum-research threshold
+(score >= 24) are all *narrower* than Attest on some combination of
+TAM, personal fit, or build accessibility. The single candidate that
+scored higher than Attest (27 vs 26) is **Candidate 1 below** — which
+is a *vertical pivot of Attest itself* (reuse the SDK, swap the
+regulation from EU AI Act to FDA SaMD / PCCP). That's a meaningful
+result:
+
+- **If Attest fails at construction, the strongest fallback is not
+  abandoning the SDK — it's moving it to medical AI post-market
+  surveillance.** The code, the Annex-IV-equivalent generator, and the
+  drift monitoring transfer directly. The FDA has been explicit that
+  PCCP-modified devices need structured post-market evidence.
+- **If Attest fails at a deeper level** (e.g. AI vendors genuinely don't
+  pay for runtime evidence at any price), the next-best options are
+  *completely different products* in narrower markets (interconnection
+  queue navigator, 510(k) filing SaaS). Neither beats Attest today on
+  the rubric, but they survive the first cut.
+- **Climate / energy is harder than it looks from the outside.**
+  Carbon incumbents (Watershed, Persefoni, Sweep) have saturated the
+  obvious wedges. Only interconnection queue navigation and CBAM
+  tooling scored above 22 in theme E. The rest scored in the high
+  teens.
+- **Compliance infrastructure plays (theme A) all scored lower than
+  Attest.** That's not surprising — we already picked the best
+  adjacent wedge when we picked Attest.
+
+---
+
+### Candidate 1 — Attest-FDA (medical AI post-market surveillance)
+
+- **One-line thesis:** Port Attest's SDK + Annex-IV generator to FDA
+  SaMD. Output: PCCP-aligned performance monitoring reports, post-
+  market surveillance evidence, and 522 order support.
+- **Buyer:** Regulatory Affairs Director or Head of Quality at AI
+  medical device companies (Aidoc, Paige.AI, RapidAI, Tempus, dozens
+  of smaller players). Budget line: regulatory operations /
+  post-market.
+- **Forcing function:** FDA's 2024 PCCP final guidance requires
+  pre-specified performance monitoring for ML-modified devices. Every
+  510(k)-cleared AI/ML device (950+ and growing at ~300/yr) needs
+  ongoing evidence.
+- **MVP shape:** Fork Attest core. Replace EU AI Act classifier with
+  FDA SaMD risk categorization (Class I/II/III, IMDRF SaMD). Replace
+  Annex IV template with PCCP modification summary + 21 CFR 820
+  records. Ship drift detection for clinical performance metrics
+  (sensitivity/specificity). ~3-4 weeks.
+- **Defensibility path:** FDA-specific workflow + precedent from first
+  10 customers becomes a trust moat. Regulated medical device
+  customers don't switch tooling quarterly. HIPAA compliance posture +
+  FDA relationship knowledge compounds.
+- **Biggest risk:** Medical device sales cycles are 6-12 months; a
+  solo founder without medical background may lack credibility with
+  Regulatory Affairs buyers. Requires at least one RA advisor on the
+  team to close deals.
+- **Score:** U/BA/D/BC/TAM/PF/SV = 3/4/4/4/3/4/5 → **27 / 35**
+- **What would have to be true to pivot here?** (a) Attest construction
+  outreach gets zero pilot conversions in 60 days, AND (b) an inbound
+  or warm intro surfaces from a medical AI company, OR (c) we can
+  find a Regulatory Affairs advisor willing to co-sell for equity.
+
+---
+
+### Candidate 2 — Interconnection queue navigator for IPPs
+
+- **One-line thesis:** ISO-queue intelligence SaaS that tells utility-
+  scale solar/storage developers where their projects stand, what
+  delays to expect, and how to strategize queue position reforms.
+  Dashboard + alerts + FERC filing support.
+- **Buyer:** Director of Interconnection or VP Development at
+  independent power producers (IPPs) and utility-scale developers.
+  Named role, $50-150k/yr budget line.
+- **Forcing function:** FERC Order 2023 queue reform (2023), MISO /
+  PJM / CAISO cluster study restructuring, and the fact that grid-
+  interconnection delay is now the #1 constraint on US clean energy
+  deployment (~2,000 GW in queue, 5-year average wait).
+- **MVP shape:** Pull ISO public queue data (all 7 ISOs publish some
+  form), normalise, add delay prediction + peer comparison. 4 weeks to
+  a useful v1.
+- **Defensibility path:** Proprietary models of queue dynamics; once
+  one IPP uses us for a deal, the case study sells the next three.
+  Queue intelligence compounds with historical data.
+- **Biggest risk:** IPP procurement is slow; a single $1M+ deal loss
+  can crater an IPP, which makes them risk-averse on new vendors.
+  Also, some IPPs may build this in-house once the problem is
+  formalised.
+- **Score:** U/BA/D/BC/TAM/PF/SV = 4/3/4/4/3/2/5 → **25 / 35**
+- **What would have to be true to pivot here?** Someone on the
+  founder's network has direct IPP relationships, OR we can find a
+  co-founder from the energy development world. Energy-sector trust
+  is not something a compliance-background outsider builds in <6
+  months.
+
+---
+
+### Candidate 3 — 510(k) / PCCP filing infrastructure for AI medical devices
+
+- **One-line thesis:** Software that writes the structured portions of
+  an FDA 510(k) or PCCP submission for AI/ML medical devices. Not
+  full RA-as-a-service; specifically the repetitive structured
+  artefacts (device description, performance testing protocols,
+  labeling, PCCP modification table).
+- **Buyer:** Regulatory Affairs lead at AI medical device companies;
+  typically 1-3 person RA team spending $200-500k/yr on outside RA
+  consultants.
+- **Forcing function:** Every SaMD clearance now needs PCCP; 300+
+  new AI/ML clearances per year; average 510(k) writing cost
+  $100-300k in consulting.
+- **MVP shape:** Structured 510(k) section generator for device
+  description + performance testing protocol. FDA eSTAR template
+  integration. 4-6 weeks.
+- **Defensibility path:** Each accepted filing becomes a template for
+  the next. FDA-specific knowledge + eSTAR integration is sticky.
+- **Biggest risk:** FDA consultant firms (NAMSA, Emergo, RQM+) have
+  30-year relationships with buyers; software that doesn't carry a
+  name sits in the "we'll try it for a non-critical filing" slot.
+- **Score:** U/BA/D/BC/TAM/PF/SV = 4/3/4/4/3/2/5 → **25 / 35**
+- **What would have to be true to pivot here?** Same as Candidate 1's
+  advisor requirement. Also: a credible first customer willing to run
+  a filing through our tool for a reduced fee.
+
+---
+
+### Holding pen (scored 22–24, kept for reference, no deep work)
+
+| Candidate | Score | One-line reason not to pursue now |
+|---|---|---|
+| NYC LL144 / CO AI Act bias audit SaaS | 24 | Crowded (Warden AI, Parity, Arthur); HR domain isn't home turf. |
+| Clinical trial AI regulatory assistant | 24 | Pharma sales cycle is 12-18 months; domain is outside depth. |
+| CBAM compliance for EU importers | 24 | Niche workflow; carbon majors will add a CBAM module in 2026. |
+| Methane quantification for upstream O&G | 23 | Requires sensor/data integration; wrong industry culturally. |
+| SR 11-7 model risk for mid-market banks | 23 | Validmind / Modelop / Arthur compete; bank procurement brutal. |
+| AI-BOM / model provenance | 22 | No hard deadline; unclear budget-holder today. |
+| Red-teaming-as-a-service for regulated AI | 22 | Haize, Repello, Promptfoo are funded; ethical edge cases. |
+| EU AI Act deployer-side compliance (Art 26-29) | 20 | Org-process + enterprise sales; wrong shape for solo. |
+
+---
+
+### Killed (< 22 on first pass — do not revisit without new evidence)
+
+- Legal AI privilege/confidentiality compliance (score 18; small buyer segment, bar rules are soft).
+- Scope 3 supplier engagement tooling (not scored in full; Watershed/Persefoni own this and it's hand-to-hand combat).
+- Bio/lab-infra candidates from Theme F — did not run (theme not selected).
+- Defense / dual-use — did not run (theme not selected).
 
 ---
 
