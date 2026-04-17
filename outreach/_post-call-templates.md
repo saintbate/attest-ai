@@ -32,6 +32,13 @@ Based on that, Attest Team ($12,000/yr, up to 5 high-risk systems) is
 the right starting tier. Covers your {flagged system} and gives you room
 to add {N+1 / N+2} without a tier change.
 
+Scope reminder so there's no surprise later: Attest produces the
+**runtime evidence** the Act's technical articles require — inference
+logs (Art. 12), drift signals (Art. 15/72), Annex III classification,
+Annex IV + OSCAL docs (Art. 11). Your team still owns the risk
+management system (Art. 9), oversight design (Art. 14), and conformity
+assessment sign-off (Art. 43). We don't sell a consultant substitute.
+
 Pricing and what's in each plan:
 https://attest-ai-eta.vercel.app/pricing.html
 
@@ -188,3 +195,6 @@ Nick
 5. **Log the reply (or lack of one) in PRICING.md's "Open questions"
    or in a simple `outreach/_log.md`.** Patterns matter more than any
    single call.
+6. **State scope honestly, once, in every follow-up.** If they think
+   Attest is a full compliance solution and sign on that belief, they
+   churn at renewal. Name Art. 9 / 14 / 43 out loud so the line is clear.

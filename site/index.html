@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attest — EU AI Act compliance for construction AI</title>
-    <meta name="description" content="One SDK. Automatic risk classification, continuous monitoring, and audit-ready documentation for your AI systems. Enforcement starts August 2, 2026.">
+    <title>Attest — Runtime evidence for high-risk AI</title>
+    <meta name="description" content="An SDK that captures the logs, drift signals, and Annex IV documentation the EU AI Act's Articles 11, 12, 15 and 72 require. Built for AI teams whose compliance lead needs evidence — not slideware.">
     <style>
         :root {
             --bg: #0b0d11;
@@ -378,6 +378,63 @@
 
         /* ── SOURCES ── */
 
+        .scope {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 32px 56px;
+        }
+        .scope-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+        .scope-head {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-strong);
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+        .scope-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .scope-col {
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px;
+            background: var(--surface);
+        }
+        .scope-col h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+        .scope-col.does h4 { color: var(--text); }
+        .scope-col.doesnt h4 { color: var(--text-faint); }
+        .scope-col ul {
+            list-style: none;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+        .scope-col.does ul { color: var(--text); }
+        .scope-col.doesnt ul { color: var(--text-muted); }
+        .scope-col li { padding: 5px 0; }
+        .scope-col li::before {
+            content: "— ";
+            color: var(--text-faint);
+        }
+        .scope-col li .art {
+            color: var(--text-faint);
+            font-size: 11px;
+            margin-left: 4px;
+        }
+
         .sources {
             max-width: 720px;
             margin: 0 auto;
@@ -432,6 +489,7 @@
             .band { flex-direction: column; }
             .band-item + .band-item { border-left: none; border-top: 1px solid var(--border-subtle); }
             .feature-grid { grid-template-columns: 1fr; }
+            .scope-grid { grid-template-columns: 1fr; }
             .header-nav a:not(.header-cta) { display: none; }
         }
     </style>
@@ -450,8 +508,8 @@
 
 <div class="hero">
     <div class="hero-tag" id="countdown"></div>
-    <h1>EU AI Act compliance.<br>One line of code.</h1>
-    <p>Attest wraps your AI models and automatically handles risk classification, inference logging, drift detection, and Annex IV documentation. Built for construction AI teams who need to ship — not hire a compliance department.</p>
+    <h1>Runtime evidence<br>for high-risk AI.</h1>
+    <p>Attest wraps your models and produces the inference logs, drift signals, risk classification, and Annex IV documentation the EU AI Act's technical articles require. Your compliance lead still owns risk management and conformity assessment — we give them the evidence base.</p>
     <div class="hero-actions">
         <a href="#start" class="btn btn-primary">Get started</a>
         <a href="#features" class="btn btn-ghost">How it works</a>
@@ -480,16 +538,16 @@ result <span class="op">=</span> model(site_photo)</pre>
 
 <div class="band">
     <div class="band-item">
-        <div class="band-val red">18%</div>
-        <div class="band-label">feel "highly prepared" for the AI Act<sup>1</sup></div>
+        <div class="band-val">Arts 11 · 12 · 15 · 72</div>
+        <div class="band-label">what Attest produces evidence for<sup>1</sup></div>
     </div>
     <div class="band-item">
-        <div class="band-val">€15M / 3%</div>
-        <div class="band-label">max fine, whichever is higher<sup>2</sup></div>
+        <div class="band-val">3 min</div>
+        <div class="band-label">regenerate Annex IV from production data</div>
     </div>
     <div class="band-item">
         <div class="band-val red">2 Aug</div>
-        <div class="band-label">2026 enforcement for high-risk</div>
+        <div class="band-label">2026 enforcement for high-risk<sup>2</sup></div>
     </div>
 </div>
 
@@ -565,14 +623,41 @@ result <span class="op">=</span> model(site_photo)</pre>
     </div>
 </div>
 
+<div class="scope">
+    <div class="scope-title">Scope</div>
+    <div class="scope-head">Where Attest ends — and what still needs a human.</div>
+    <div class="scope-grid">
+        <div class="scope-col does">
+            <h4>Attest produces</h4>
+            <ul>
+                <li>Inference logs with input metadata, output, confidence, latency <span class="art">Art. 12</span></li>
+                <li>Drift signals with p-value and effect size <span class="art">Art. 15 · 72</span></li>
+                <li>Annex III risk classification <span class="art">Art. 6</span></li>
+                <li>Annex IV technical documentation — Markdown + OSCAL <span class="art">Art. 11</span></li>
+                <li>10-year evidence retention <span class="art">Art. 18</span></li>
+            </ul>
+        </div>
+        <div class="scope-col doesnt">
+            <h4>Attest does not produce</h4>
+            <ul>
+                <li>Risk management system — your compliance lead writes the SOP <span class="art">Art. 9</span></li>
+                <li>Data governance policy <span class="art">Art. 10</span></li>
+                <li>Human oversight design — we capture decisions, your team defines them <span class="art">Art. 14</span></li>
+                <li>Conformity assessment sign-off <span class="art">Art. 43</span></li>
+                <li>Declaration of conformity <span class="art">Art. 47</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div class="sources">
-    <p><sup>1</sup> Deloitte, <em>The EU AI Act — What Companies Need To Know</em> (2024): 18% of Europe-based respondents reported being "highly prepared" for AI risk and governance.</p>
-    <p><sup>2</sup> EU AI Act (Regulation 2024/1689), Article 99. High-risk non-compliance: up to €15M or 3% of global annual turnover — whichever is higher. Prohibited practices: up to €35M or 7%. Enforcement for high-risk begins 2 August 2026.</p>
+    <p><sup>1</sup> EU AI Act (Regulation 2024/1689): Art. 11 + Annex IV (technical documentation), Art. 12 (automatic logging), Art. 15 (accuracy, robustness, cybersecurity evidence), Art. 72 (post-market monitoring plan).</p>
+    <p><sup>2</sup> EU AI Act Article 99. High-risk non-compliance: up to €15M or 3% of global annual turnover — whichever is higher. Prohibited practices: up to €35M or 7%. Enforcement for high-risk begins 2 August 2026.</p>
 </div>
 
 <div class="cta-section" id="start">
     <h2 id="countdown-cta"></h2>
-    <p>Install the SDK. Wrap your models. Generate your documentation.<br>We'll handle the compliance. You handle the construction.</p>
+    <p>Install the SDK. Wrap your models. The evidence base for your Article 11 technical file starts generating itself.</p>
     <div class="code-section" style="padding-bottom: 0; margin-top: 20px;">
         <div class="code-block">
             <div class="code-bar">

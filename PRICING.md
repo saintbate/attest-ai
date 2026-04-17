@@ -30,13 +30,21 @@ enterprise GRC contract.
 
 ## 2. What we actually sell (outcomes, not features)
 
-1. **EU deal unblock** — artifact bundle (Annex IV Markdown + OSCAL-aligned JSON) that a deployer's procurement / legal can accept as evidence.
-2. **Evidence, on autopilot** — runtime logging, drift detection, classification that keeps that bundle current.
-3. **One fewer hire** — avoid a €120-180k compliance engineer by shipping the SDK + dashboard.
+Attest is the **runtime evidence layer** for high-risk AI. We cover the
+technical articles of the EU AI Act that live in the codebase (Art. 11, 12,
+15, 72) and we stay out of the organizational work that properly belongs to
+the customer's compliance lead (Art. 9 risk management, Art. 10 data
+governance, Art. 14 oversight design, Art. 43 conformity assessment, Art. 47
+declaration of conformity).
 
-We do **not** sell: "certified compliant," a legal opinion, or a notified-body
-substitute. Sell **evidence generation + continuous monitoring**; the customer
-still owns legal sign-off.
+1. **EU deal unblock** — artifact bundle (Annex IV Markdown + OSCAL-aligned JSON) that a deployer's procurement / legal can accept as evidence.
+2. **Evidence, on autopilot** — inference logging, drift detection with effect size, classification, retention — continuous, not a one-time report.
+3. **One fewer engineering project** — avoid 2-3 engineer-quarters writing a custom logging + drift + documentation stack no customer pays for directly.
+
+We do **not** sell: "certified compliant," a legal opinion, a notified-body
+substitute, or a risk management SOP. When a buyer asks about Art. 9 / 14
+specifically, the correct answer is *"we capture the runtime evidence those
+articles reference; your compliance lead writes the policy."*
 
 ---
 
