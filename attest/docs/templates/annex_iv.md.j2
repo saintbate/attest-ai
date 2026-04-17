@@ -181,7 +181,12 @@ Attest provides continuous monitoring infrastructure including:
 - **Drift detection:** Statistical monitoring of confidence distributions and error rates
   over time
 - **Alerting:** Configurable thresholds for accuracy degradation and anomaly detection
-- **Audit trail:** Tamper-evident logs retained for the required 10-year period
+- **Audit trail:** Timestamped logs retained for the required 10-year period
+- **Input evidence linking (optional):** When enabled, each inference carries a SHA-256
+  hash of the input plus an optional customer-supplied reference (for example an object
+  store path). This lets an auditor reproduce *which* input produced a given prediction
+  without Attest ever storing the input itself — important for camera-based and other
+  high-risk AI systems whose source data cannot leave the customer's environment.
 
 _Provider must supplement with domain-specific monitoring procedures and incident
 reporting escalation paths._

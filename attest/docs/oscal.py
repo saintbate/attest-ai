@@ -105,6 +105,15 @@ def _prop(name: str, value: str, ns: str = "https://attest.ai/ns/oscal") -> dict
 def _inference_stats(system: AISystem) -> dict[str, Any]:
     confidences = [r.confidence for r in system.inference_log if r.confidence is not None]
     latencies = [r.latency_ms for r in system.inference_log]
+    total = len(system.inference_log)
+    with_hash = sum(
+        1 for r in system.inference_log
+        if r.input_evidence is not None and r.input_evidence.sha256
+    )
+    with_ref = sum(
+        1 for r in system.inference_log
+        if r.input_evidence is not None and r.input_evidence.ref
+    )
     return {
         "total_inferences": system.total_inferences,
         "error_rate": round(system.error_rate, 6),
@@ -112,6 +121,11 @@ def _inference_stats(system: AISystem) -> dict[str, Any]:
         "std_confidence": round(float(np.std(confidences)), 6) if confidences else None,
         "mean_latency_ms": round(float(np.mean(latencies)), 3) if latencies else None,
         "p95_latency_ms": round(float(np.percentile(latencies, 95)), 3) if latencies else None,
+        "evidence_records": total,
+        "evidence_with_hash": with_hash,
+        "evidence_with_ref": with_ref,
+        "evidence_hash_coverage": round(with_hash / total, 4) if total else 0.0,
+        "evidence_ref_coverage": round(with_ref / total, 4) if total else 0.0,
     }
 
 
@@ -172,6 +186,34 @@ def _build_observations(
             "props": [
                 _prop("mean_latency_ms", str(stats["mean_latency_ms"])),
                 _prop("p95_latency_ms", str(stats["p95_latency_ms"])),
+            ],
+        })
+
+    if stats["evidence_with_hash"] > 0 or stats["evidence_with_ref"] > 0:
+        observations.append({
+            "uuid": str(uuid.uuid4()),
+            "title": "Input evidence linking (Article 12 reproducibility)",
+            "description": (
+                f"Of {stats['evidence_records']} recorded inferences, "
+                f"{stats['evidence_with_hash']} "
+                f"({stats['evidence_hash_coverage']:.2%}) have a cryptographic "
+                f"input hash and "
+                f"{stats['evidence_with_ref']} "
+                f"({stats['evidence_ref_coverage']:.2%}) have a customer-supplied "
+                f"input reference. This lets an auditor reproduce which input "
+                f"produced a given prediction without Attest ever storing the "
+                f"underlying data — relevant for camera-based and other "
+                f"high-risk AI systems where Article 12 logging must be "
+                f"reproducible at audit time."
+            ),
+            "methods": ["TEST"],
+            "types": ["monitoring"],
+            "collected": _iso_now(),
+            "props": [
+                _prop("evidence_hash_coverage", str(stats["evidence_hash_coverage"])),
+                _prop("evidence_ref_coverage", str(stats["evidence_ref_coverage"])),
+                _prop("evidence_records_total", str(stats["evidence_records"])),
+                _prop("source", "attest.sdk/input_evidence"),
             ],
         })
 

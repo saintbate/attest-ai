@@ -19,6 +19,24 @@ class RiskLevel(str, Enum):
 
 
 @dataclass
+class InputEvidence:
+    """Hash-only reference to a model input, captured at inference time.
+
+    Purpose: lets an auditor reproduce *which* input produced a given
+    prediction without Attest ever storing the input itself. Important for
+    camera-based and other high-risk AI systems where Article 12 logging
+    must be reproducible at audit time but the underlying data cannot
+    leave the customer's environment.
+    """
+
+    sha256: str
+    size_bytes: int | None = None
+    source_type: str | None = None
+    ref: str | None = None
+    captured_at: float = field(default_factory=time.time)
+
+
+@dataclass
 class InferenceRecord:
     timestamp: float
     input_shape: tuple | None = None
@@ -28,6 +46,7 @@ class InferenceRecord:
     confidence: float | None = None
     latency_ms: float = 0.0
     metadata: dict[str, Any] = field(default_factory=dict)
+    input_evidence: InputEvidence | None = None
 
 
 @dataclass

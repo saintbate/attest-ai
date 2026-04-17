@@ -565,7 +565,7 @@ result <span class="op">=</span> model(site_photo)</pre>
         </div>
         <div class="feature">
             <div class="feature-name">Inference logging</div>
-            <div class="feature-desc">Every prediction logged with input metadata, output summary, confidence, and latency. Automatic audit trail.</div>
+            <div class="feature-desc">Every prediction logged with input metadata, output summary, confidence, and latency. Optional SHA-256 input hash + customer-supplied reference links each inference to a reproducible source — without Attest ever storing the underlying frame.</div>
             <div class="feature-ref">Art. 12</div>
         </div>
         <div class="feature">
@@ -631,6 +631,7 @@ result <span class="op">=</span> model(site_photo)</pre>
             <h4>Attest produces</h4>
             <ul>
                 <li>Inference logs with input metadata, output, confidence, latency <span class="art">Art. 12</span></li>
+                <li>Input evidence linking — hash + customer-supplied reference, built for camera-based AI <span class="art">Art. 12</span></li>
                 <li>Drift signals with p-value and effect size <span class="art">Art. 15 · 72</span></li>
                 <li>Annex III risk classification <span class="art">Art. 6</span></li>
                 <li>Annex IV technical documentation — Markdown + OSCAL <span class="art">Art. 11</span></li>
